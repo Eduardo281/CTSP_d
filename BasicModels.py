@@ -4,12 +4,13 @@ class CTSP_d_BaseModel(object):
     """Class to instantiate the common \"Base CTSP_d\" model, that is, a binary assignment model,
     with functions to solve the model, print variables, and more."""
     def __init__(self, data, relax=False, memLimit=None):
-        self.D = data["distances"]
+        self.data = data
+        self.D = self.data["distances"]
         self.n = len(self.D)
         self.V = set(range(self.n))
-        self.V_P = data["V_P"]
+        self.V_P = self.data["V_P"]
         self.P = len(self.V_P)
-        self.d = data["d"]
+        self.d = self.data["d"]
         self.A = [(i, j) for i in self.V for j in self.V if(i != j)]
 
         self.route = []
