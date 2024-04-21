@@ -1,6 +1,7 @@
 import os
 import re
 import json
+import datetime
 
 import PATHS
 
@@ -46,3 +47,33 @@ def load_200_vertices_clustered_instances_list():
         item for item in os.listdir(PATHS.INSTANCES_FOLDER) 
             if pattern.match(item)
     ]
+
+def export_results(model, datetime_on_filename=True):
+    data = dict()
+    
+    ### INSTANCE_NAME:
+    data["name"] = model.data["instance_name"]
+
+    ### DATETIME:
+    data["datetime"] = datetime.datetime.now().isoformat()
+
+    ### OBJ VAL:
+    data["objective_value"] = model.model.ObjVal
+
+    ### RUNTIME:
+    data["runtime"] = model.model.Runtime
+
+    ### GAP:
+    data["GAP"] = model.model.MIPGap
+
+    ### ROUTE:
+    # TODO
+
+    filename = data["name"]
+    if(datetime_on_filename):
+        filename += "_" + datetime.datetime.now().strftime("%Y%m%d%H%M%S%f")
+    filename += ".json"
+
+    f = open(os.path.join(PATHS.RESULTS_FOLDER, filename), "w")
+    json.dump(data, f)
+    f.close()
