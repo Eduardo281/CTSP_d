@@ -27,6 +27,8 @@ class VI_MTZ_CTSP_d_Model(VI_BaseModel):
     def __init__(self, data, relax=False, memLimit=None):
         VI_BaseModel.__init__(self, data, relax, memLimit)
 
+        self.alias = "MTZ2"
+
         if(relax):
             self.u = self.model.addVars(self.V, ub = self.n - 1)
         else:
@@ -102,6 +104,8 @@ class VI_GP_CTSP_d_Model(VI_BaseModel):
     """Class to add valid inequalities to the GP model."""
     def __init__(self, data, relax=False, memLimit=None):
         VI_BaseModel.__init__(self, data, relax, memLimit)
+
+        self.alias = "GP2"
 
         if(relax):
             self.y = self.model.addVars(self.A)
@@ -179,6 +183,8 @@ class VI_SSB_CTSP_d_Model(VI_BaseModel):
     def __init__(self, data, relax=False, memLimit=None):
         VI_BaseModel.__init__(self, data, relax, memLimit)
 
+        self.alias = "SSB2"
+
         if(relax):
             self.y = self.model.addVars(self.A)
         else:
@@ -252,6 +258,8 @@ class VI_SST_CTSP_d_Model(VI_BaseModel):
     """Class to add valid inequalities to the SST model."""
     def __init__(self, data, relax=False, memLimit=None):
         VI_BaseModel.__init__(self, data, relax, memLimit)
+
+        self.alias = "SST2"
 
         self.non_zero_i_j_k = [
             (i, j, k) for i in self.V for j in self.V for k in self.V 
@@ -339,6 +347,8 @@ class VI_Ha_CTSP_d_Model(VI_BaseModel):
     """Class to add valid inequalities to the MTZ model."""
     def __init__(self, data, relax=False, memLimit=None):
         VI_BaseModel.__init__(self, data, relax, memLimit)
+
+        self.alias = "H2020"
 
         if(relax):
             self.u = self.model.addVars(self.V, ub = self.n - 1)

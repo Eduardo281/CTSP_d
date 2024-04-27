@@ -150,6 +150,8 @@ class MTZ_CTSP_d_Model(CTSP_d_BaseModel):
     def __init__(self, data, relax=False, memLimit=None):
         CTSP_d_BaseModel.__init__(self, data, relax, memLimit)
 
+        self.alias = "MTZ1"
+
         if(relax):
             self.u = self.model.addVars(self.V, ub = self.n - 1)
         else:
@@ -170,6 +172,8 @@ class GP_CTSP_d_Model(CTSP_d_BaseModel):
     """Class to instantiate the CTSP_d model based on the Gouveia and Pires formulation for the TSP."""
     def __init__(self, data, relax=False, memLimit=None):
         CTSP_d_BaseModel.__init__(self, data, relax, memLimit)
+
+        self.alias = "GP1"
 
         self.non_zero_i_j = [
             (i, j) for (i, j) in self.A if (i > 0 and j > 0)
@@ -219,6 +223,8 @@ class SSB_CTSP_d_Model(CTSP_d_BaseModel):
     def __init__(self, data, relax=False, memLimit=None):
         CTSP_d_BaseModel.__init__(self, data, relax, memLimit)
 
+        self.alias = "SSB1"
+
         if(relax):
             self.y = self.model.addVars(self.A)
         else:
@@ -265,6 +271,8 @@ class SST_CTSP_d_Model(CTSP_d_BaseModel):
     presented in Oncan et. al. (2009), originally proposed by Sherali et. al. (2006)."""
     def __init__(self, data, relax=False, memLimit=None):
         CTSP_d_BaseModel.__init__(self, data, relax, memLimit)
+
+        self.alias = "SST1"
 
         self.non_zero_i_j_k = [
             (i, j, k) for i in self.V for j in self.V for k in self.V 
