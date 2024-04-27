@@ -1,9 +1,13 @@
 import os
 import re
+import sys
 import json
 import datetime
+import platform
 
 import PATHS
+
+import gurobipy as gp
 
 def read_instance(instance_name):
     return json.load(open(os.path.join(PATHS.INSTANCES_FOLDER, instance_name), "r"))
@@ -48,11 +52,25 @@ def load_200_vertices_clustered_instances_list():
             if pattern.match(item)
     ]
 
-def export_results(model, datetime_on_filename=True):
+def export_results(
+        model, 
+        datetime_on_filename=True):
     data = dict()
     
     ### INSTANCE_NAME:
     data["name"] = model.data["instance_name"]
+
+    ### SOLVER_ALIAS:
+    data["solver_alias"] = model.alias
+
+    ### PYTHON_VERSION:
+    data["python_version"] = sys.version
+
+    ### GUROBI_VERSION:
+    data["gurobi_version"] = "Gurobi " + ".".join([str(val) for val in gp.gurobi.version()])
+
+    ### PLATFORM:
+    data["platform"] = platform.platform()
 
     ### DATETIME:
     data["datetime"] = datetime.datetime.now().isoformat()
