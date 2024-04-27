@@ -147,10 +147,11 @@ class CTSP_d_BaseModel(object):
 
 class MTZ_CTSP_d_Model(CTSP_d_BaseModel):
     """Class to instantiate the CTSP_d model based on the classic MTZ formulation for the TSP."""
+    
+    alias = "MTZ1"
+    
     def __init__(self, data, relax=False, memLimit=None):
         CTSP_d_BaseModel.__init__(self, data, relax, memLimit)
-
-        self.alias = "MTZ1"
 
         if(relax):
             self.u = self.model.addVars(self.V, ub = self.n - 1)
@@ -170,10 +171,11 @@ class MTZ_CTSP_d_Model(CTSP_d_BaseModel):
 
 class GP_CTSP_d_Model(CTSP_d_BaseModel):
     """Class to instantiate the CTSP_d model based on the Gouveia and Pires formulation for the TSP."""
+    
+    alias = "GP1"
+    
     def __init__(self, data, relax=False, memLimit=None):
         CTSP_d_BaseModel.__init__(self, data, relax, memLimit)
-
-        self.alias = "GP1"
 
         self.non_zero_i_j = [
             (i, j) for (i, j) in self.A if (i > 0 and j > 0)
@@ -220,10 +222,11 @@ class GP_CTSP_d_Model(CTSP_d_BaseModel):
 class SSB_CTSP_d_Model(CTSP_d_BaseModel):
     """Class to instantiate the CTSP_d model based on the SSB3 formulation for the TSP
     presented in Oncan et. al. (2009), originally proposed by Sarin et. al."""
+    
+    alias = "SSB1"
+    
     def __init__(self, data, relax=False, memLimit=None):
         CTSP_d_BaseModel.__init__(self, data, relax, memLimit)
-
-        self.alias = "SSB1"
 
         if(relax):
             self.y = self.model.addVars(self.A)
@@ -269,10 +272,11 @@ class SSB_CTSP_d_Model(CTSP_d_BaseModel):
 class SST_CTSP_d_Model(CTSP_d_BaseModel):
     """Class to instantiate the CTSP_d model based on the SST2 formulation for the TSP
     presented in Oncan et. al. (2009), originally proposed by Sherali et. al. (2006)."""
+    
+    alias = "SST1"
+    
     def __init__(self, data, relax=False, memLimit=None):
         CTSP_d_BaseModel.__init__(self, data, relax, memLimit)
-
-        self.alias = "SST1"
 
         self.non_zero_i_j_k = [
             (i, j, k) for i in self.V for j in self.V for k in self.V 
