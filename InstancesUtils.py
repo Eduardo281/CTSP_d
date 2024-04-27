@@ -57,37 +57,25 @@ def export_results(
         datetime_on_filename=True):
     data = dict()
     
-    ### INSTANCE_NAME:
-    data["name"] = model.data["instance_name"]
-
-    ### SOLVER_ALIAS:
+    data["instance_name"] = model.data["instance_name"]
     data["solver_alias"] = model.alias
-
-    ### PYTHON_VERSION:
     data["python_version"] = sys.version
-
-    ### GUROBI_VERSION:
     data["gurobi_version"] = "Gurobi " + ".".join([str(val) for val in gp.gurobi.version()])
-
-    ### PLATFORM:
     data["platform"] = platform.platform()
-
-    ### DATETIME:
     data["datetime"] = datetime.datetime.now().isoformat()
 
-    ### OBJ VAL:
-    data["objective_value"] = model.model.ObjVal
+    if(model.model.SolCount > 0):
+        data["objective_value"] = model.model.ObjVal
+        data["runtime"] = model.model.Runtime
+        data["GAP"] = model.model.MIPGap
+        data["route"] = model.routeList
+        data["x_vars"] = {str(pair): model.x[pair].X for pair in model.x if model.x[pair].X > 0.5}
+        if(len(model.u) > 0):
+            data["u_vars"] = {str(index): model.u[index].X for index in model.u if model.u[index].X > 0.5}
+        if(len(model.y) > 0):
+            data["y_vars"] = {str(pair): model.y[pair].X for pair in model.y if model.y[pair].X > 0.5}
 
-    ### RUNTIME:
-    data["runtime"] = model.model.Runtime
-
-    ### GAP:
-    data["GAP"] = model.model.MIPGap
-
-    ### ROUTE:
-    # TODO
-
-    filename = data["name"]
+    filename = data["instance_name"]
     if(datetime_on_filename):
         filename += "_" + datetime.datetime.now().strftime("%Y%m%d%H%M%S%f")
     filename += ".json"
