@@ -59,3 +59,21 @@ def print_solution_log(solution_log_level, msg_log_level, msg):
     LOG_TAB = "    "
     if(msg_log_level <= solution_log_level):
         print((msg_log_level-1)*LOG_TAB + msg)
+
+def get_solved_instances_list_path(solver_alias):
+    return os.path.join(PATHS.SOLVED_INSTANCES_FOLDER, solver_alias)
+
+def create_solved_instances_list(solver_alias):
+    if(not os.path.isfile(get_solved_instances_list_path(solver_alias))):
+        open(get_solved_instances_list_path(solver_alias), "w").close()
+
+def load_solved_instances_list(solver_alias):
+    if(os.path.isfile(get_solved_instances_list_path(solver_alias))):
+        f = open(get_solved_instances_list_path(solver_alias), "r")
+        return set([line.strip() for line in f.readlines()])
+    
+def append_to_solved_instances_list(solver_alias, instance_name):
+    if(os.path.isfile(get_solved_instances_list_path(solver_alias))):
+        f = open(get_solved_instances_list_path(solver_alias), "a")
+        f.write(instance_name+"\n")
+        f.close()

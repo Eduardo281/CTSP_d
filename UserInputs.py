@@ -12,13 +12,14 @@ EXPORT_SOLUTION_PARAMETERS = {
     "DATETIME_ON_FILENAME": False
 }
 
-SOLUTION_LOG_LEVEL = 3
+USE_SOLVED_INSTANCES_LIST = True
+
+SOLUTION_LOG_LEVEL = 4
 
 SOLVERS_LIST = ["MTZ2", "H2020"]
 
 INSTANCES_LIST = [
     "berlin52-C-3-0-a.json", 
-    "berlin52-C-5-1-c.json",
     "swiss42-C-5-0-b.json",
     "swiss42-C-3-0-c.json",
     "swiss42-C-3-1-a.json"
