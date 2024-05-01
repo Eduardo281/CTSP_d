@@ -46,7 +46,7 @@ def export_results(
         if(len(model.y) > 0):
             data["y_vars"] = {str(pair): model.y[pair].X for pair in model.y if model.y[pair].X > 0.5}
 
-    filename = data["instance_name"]
+    filename = data["solver_alias"] + "_" + data["instance_name"]
     if(datetime_on_filename):
         filename += "_" + datetime.datetime.now().strftime("%Y%m%d%H%M%S%f")
     filename += ".json"
