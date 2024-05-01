@@ -54,3 +54,8 @@ def export_results(
     f = open(os.path.join(PATHS.RESULTS_FOLDER, filename), "w")
     json.dump(data, f)
     f.close()
+
+def print_solution_log(solution_log_level, msg_log_level, msg):
+    LOG_TAB = "    "
+    if(msg_log_level <= solution_log_level):
+        print((msg_log_level-1)*LOG_TAB + msg)
