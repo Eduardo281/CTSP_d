@@ -20,14 +20,15 @@ class CTSP_d_BaseModel(object):
         self.u = set()
         self.y = set()
 
+        self.env = gp.Env(empty=True)
+        self.env.setParam("OutputFlag", 0)
+
         if(memLimit):
             self.memLimit = memLimit
-            self.env = gp.Env(empty=True)
             self.env.setParam("MemLimit", self.memLimit)
-            self.env.start()
-            self.model = gp.Model(env=self.env)
-        else:
-            self.model = gp.Model()
+
+        self.env.start()
+        self.model = gp.Model(env=self.env)            
         self.relax = relax
 
         if(relax):
