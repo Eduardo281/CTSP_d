@@ -57,8 +57,11 @@ class VI_MTZ_CTSP_d_Model(VI_BaseModel):
             for p in range(self.P - self.d - 1) for j in self.V_P[p]
         )
 
-        self.MTZ_M = {(i, j):  sum(len(self.V_P[r]) for r in range(max(0, p - self.d), min(self.P, q + self.d + 1)))-1
-        for p in range(self.P) for q in range(p, self.P) for i in self.V_P[p] for j in self.V_P[q]}
+        self.MTZ_M = {
+            (i, j): sum(len(self.V_P[r]) for r in range(max(0, p - self.d), min(self.P, q + self.d + 1))) - 1
+                for p in range(self.P) for q in range(p, self.P) 
+                for i in self.V_P[p]   for j in self.V_P[q]
+        }
 
         self.MTZ_M.update({
             (j, i): self.MTZ_M[i, j] for (i, j) in list(self.MTZ_M.keys())
