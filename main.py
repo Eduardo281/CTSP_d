@@ -22,6 +22,7 @@ for solver_alias in SOLVERS_LIST:
         if(USE_SOLVED_INSTANCES_LIST):
             if instance in solved_instances_list:
                 print_solution_log(SOLUTION_LOG_LEVEL, 4, f"Skipped solved instance {instance}!")
+                instances_count += 1
                 continue
         data = read_instance(instance)
         solver = model[solver_alias](data)
