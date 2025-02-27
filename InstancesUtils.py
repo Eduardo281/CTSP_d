@@ -4,22 +4,30 @@ import json
 
 import PATHS
 
-def read_instance(instance_name):
+def read_instance(instance_name: str):
+    """Read an instance file in .csv format and return its data in a dict.
+    
+    Parameters:
+    instance_name (str): Name of the instance to be read.
+    """
     return json.load(open(os.path.join(PATHS.INSTANCES_FOLDER, instance_name), "r"))
 
 def load_small_random_instances_list():
+    """Build and return a list with all the random small instances"""
     return [
         item for item in os.listdir(PATHS.INSTANCES_FOLDER) 
             if ("berlin52-R-" in item or "swiss42-R-" in item)
     ]
 
 def load_small_clustered_instances_list():
+    """Build and return a list with all the cluster small instances"""
     return [
         item for item in os.listdir(PATHS.INSTANCES_FOLDER) 
             if ("berlin52-C-" in item or "swiss42-C-" in item)
     ]
 
 def load_100_vertices_random_instances_list():
+    """Build and return a list with all the random 100 vertices instances"""
     pattern = re.compile("kro.100-R-")
     return [
         item for item in os.listdir(PATHS.INSTANCES_FOLDER) 
@@ -27,6 +35,7 @@ def load_100_vertices_random_instances_list():
     ]
 
 def load_100_vertices_clustered_instances_list():
+    """Build and return a list with all the cluster 100 vertices instances"""
     pattern = re.compile("kro.100-C-")
     return [
         item for item in os.listdir(PATHS.INSTANCES_FOLDER) 
@@ -34,6 +43,7 @@ def load_100_vertices_clustered_instances_list():
     ]
 
 def load_200_vertices_random_instances_list():
+    """Build and return a list with all the random 200 vertices instances"""
     pattern = re.compile("kro.200-R-")
     return [
         item for item in os.listdir(PATHS.INSTANCES_FOLDER) 
@@ -41,6 +51,7 @@ def load_200_vertices_random_instances_list():
     ]
 
 def load_200_vertices_clustered_instances_list():
+    """Build and return a list with all the cluster 200 vertices instances"""
     pattern = re.compile("kro.200-C-")
     return [
         item for item in os.listdir(PATHS.INSTANCES_FOLDER) 
