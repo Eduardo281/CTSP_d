@@ -7,8 +7,15 @@ import PATHS
 def read_instance(instance_name: str):
     """Read an instance file in .csv format and return its data in a dict.
     
-    Parameters:
-    instance_name (str): Name of the instance to be read.
+    Parameters
+    ----------
+    instance_name : str
+        Name of the instance to be read.
+    
+    Returns
+    -------
+    dict
+        Instance file data.
     """
     return json.load(open(os.path.join(PATHS.INSTANCES_FOLDER, instance_name), "r"))
 
