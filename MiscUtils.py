@@ -5,10 +5,11 @@ import datetime
 import platform
 
 import gurobipy as gp
+from typing import Dict, Set
 
 import PATHS
 
-from BasicModels import MTZ_CTSP_d_Model, GP_CTSP_d_Model, SSB_CTSP_d_Model, SST_CTSP_d_Model
+from BasicModels import CTSP_d_BaseModel, MTZ_CTSP_d_Model, GP_CTSP_d_Model, SSB_CTSP_d_Model, SST_CTSP_d_Model
 from ValidInequalitiesBaseClass import VI_MTZ_CTSP_d_Model, VI_GP_CTSP_d_Model, VI_SSB_CTSP_d_Model, VI_SST_CTSP_d_Model, VI_Ha_CTSP_d_Model
 
 AVAILABLE_MODELS_LIST = [
@@ -17,15 +18,27 @@ AVAILABLE_MODELS_LIST = [
     VI_Ha_CTSP_d_Model
 ]
 
-def create_solvers_aliases_dict():
+def create_models_aliases_dict() -> Dict[str, CTSP_d_BaseModel]:
+    """Build and return a dict mapping the model aliases to the models available."""
     return {
         model.alias: model
         for model in AVAILABLE_MODELS_LIST
     }
 
 def export_results(
-        model, 
-        datetime_on_filename=True):
+        model: CTSP_d_BaseModel, 
+        datetime_on_filename: bool=True
+    ) -> None:
+    """Export the results of a solved instance as a .json file.
+
+    Parameters
+    ----------
+    model : CTSP_d_BaseModel
+        Any of the CTSP-d models available.
+    datetime_on_filename : bool, default=True
+        Allow to include a date-based information in the exported file name.
+        Useful to not overwrite already existing solution files.
+    """
     data = dict()
     
     data["instance_name"] = model.data["instance_name"]
@@ -55,25 +68,56 @@ def export_results(
     json.dump(data, f)
     f.close()
 
-def print_solution_log(solution_log_level, msg_log_level, msg):
+def print_solution_log(
+        solution_log_level: int, 
+        msg_log_level: int, 
+        msg: str
+    ) -> None:
+    """Print log messages of the solution process on the terminal.
+
+    Parameters
+    ----------
+    solution_log_level : int
+        Log level input by the user. Lower levels means less detailed 
+        information, while higher levels includes a more step-by-step 
+        description of the solution process.
+        Levels available:
+        * 0: No log messages.
+        * 1: Prints messages for the start and the end of the solution process.
+        * 2: Prints a message for every model change in the process.
+        * 3: Prints a message every time an instance starts to be solved.
+        * 4: Prints messages for skipped instances and exported solutions.
+    msg_log_level : int
+        Represents the level of the message in the logging process.
+        Msg argument will only be print when msg_log_level <= solution_log_level.
+    msg : str
+        The message to be printed.
+    """
     LOG_TAB = "    "
     if(msg_log_level <= solution_log_level):
         print((msg_log_level-1)*LOG_TAB + msg)
 
-def get_solved_instances_list_path(solver_alias):
-    return os.path.join(PATHS.SOLVED_INSTANCES_FOLDER, solver_alias)
+def get_solved_instances_list_path(model_alias: str) -> str:
+    """Return the path to the solved instances list of the input model_alias."""
+    return os.path.join(PATHS.SOLVED_INSTANCES_FOLDER, model_alias)
 
-def create_solved_instances_list(solver_alias):
-    if(not os.path.isfile(get_solved_instances_list_path(solver_alias))):
-        open(get_solved_instances_list_path(solver_alias), "w").close()
+def create_solved_instances_list(model_alias: str) -> None:
+    """Create the solved instances list file of the input model_alias."""
+    if(not os.path.isfile(get_solved_instances_list_path(model_alias))):
+        open(get_solved_instances_list_path(model_alias), "w").close()
 
-def load_solved_instances_list(solver_alias):
-    if(os.path.isfile(get_solved_instances_list_path(solver_alias))):
-        f = open(get_solved_instances_list_path(solver_alias), "r")
+def load_solved_instances_list(model_alias: str) -> Set[str]:
+    """Load the solved instances list of the input model_alias and return it as a set."""
+    if(os.path.isfile(get_solved_instances_list_path(model_alias))):
+        f = open(get_solved_instances_list_path(model_alias), "r")
         return set([line.strip() for line in f.readlines()])
     
-def append_to_solved_instances_list(solver_alias, instance_name):
-    if(os.path.isfile(get_solved_instances_list_path(solver_alias))):
-        f = open(get_solved_instances_list_path(solver_alias), "a")
+def append_to_solved_instances_list(
+        model_alias: str, 
+        instance_name: str
+    ) -> None:
+    """Append instance_name to the solved instances list of the input model_alias."""
+    if(os.path.isfile(get_solved_instances_list_path(model_alias))):
+        f = open(get_solved_instances_list_path(model_alias), "a")
         f.write(instance_name+"\n")
         f.close()

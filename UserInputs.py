@@ -1,8 +1,8 @@
 from InstancesUtils import *
 
-#################################
-#          USER INPUTS          #
-#################################
+###########################################
+#               USER INPUTS               #
+###########################################
 
 GUROBI_PARAMETERS = {
     "MAX_RUNTIME": 3600,
@@ -16,13 +16,13 @@ EXPORT_SOLUTION_PARAMETERS = {
 
 USE_SOLVED_INSTANCES_LIST = True
 
-SOLUTION_LOG_LEVEL = 4
+SOLUTION_LOG_LEVEL = 3
 
-SOLVERS_LIST = ["MTZ2", "H2020"]
+MODELS_LIST = ["MTZ2", "GP2", "SSB2", "SST2"]
 
 INSTANCES_LIST = [
-    "berlin52-C-3-0-a.json", 
-    "swiss42-C-5-0-b.json",
     "swiss42-C-3-0-c.json",
-    "swiss42-C-3-1-a.json"
+    "swiss42-R-5-0-c.json",
+    "kroE100-R-5-0-a.json",
+    "kroE100-C-5-0-a.json",
 ]
