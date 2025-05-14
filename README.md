@@ -7,6 +7,30 @@ Code and instances to reproduce the experiments presented in the paper
 easier to use and with no known bugs (except erros/bad behaviours caused by 
 bad input values - at this moment we are not validating them).
 
+# Requirements
+
+The initial version of the code was developed using:
+
+* Linux Ubuntu 20.04;
+* Python 3.10;
+* Gurobipy 9.5.
+
+The present code, which is almost the same as the original one, was tested with
+the following setup:
+
+* Microsoft Windows 11;
+* Python 3.12.10;
+* Gurobipy 12.0.1.
+
+The code is still not tested on a Mac OS, but since there is no OS specific
+parts in the code, it should work fine in this case too.
+
+Different versions of Python 3 and Gurobipy superior to Python 3.10 and
+Gurobipy 9.5 are supposed to work with no problems. 
+
+**Important:** Make sure to have a valid Gurobi license before trying to run 
+the code.
+
 # Usage
 
 ## The main script
