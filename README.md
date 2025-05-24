@@ -55,7 +55,7 @@ The data and parameters to be considered just need to be set in the file `UserIn
 
 4. `SOLUTION LOG LEVEL` (`int`): Control how much information about the solution process will be displayed on the terminal. This is not the Gurobi log, but short descriptions about the steps being executed in the solution process. Values must be between 0 and 4, where 0 means no information being printed, and 4 means to print informations about each step took.
 
-5. `MODELS_LIST` (`list`[`str`]): List of models that will be used in the experiments, represented by the aliases proposed in the paper (MTZ1, MTZ2, GP1, etc).
+5. `MODELS_LIST` (`list`[`MODELS_ENUM`]): List of models that will be used in the experiments, represented by the elements of the `MODELS_ENUM` structure.
 
 6. `INSTANCES_LIST` (`list`[`str`]): List of instances that must be solved after calling the `main.py` file. Instances can be hardcoded one by one, or using the auxiliary functions in `InstancesUtils.py`.
 

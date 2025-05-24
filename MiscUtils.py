@@ -6,24 +6,47 @@ import platform
 
 import gurobipy as gp
 from typing import Dict, Set
+from enum import Enum
 
 import PATHS
 
 from BasicModels import CTSP_d_BaseModel, MTZ_CTSP_d_Model, GP_CTSP_d_Model, SSB_CTSP_d_Model, SST_CTSP_d_Model
 from ValidInequalitiesBaseClass import VI_MTZ_CTSP_d_Model, VI_GP_CTSP_d_Model, VI_SSB_CTSP_d_Model, VI_SST_CTSP_d_Model, VI_Ha_CTSP_d_Model
 
-AVAILABLE_MODELS_LIST = [
-    MTZ_CTSP_d_Model, GP_CTSP_d_Model, SSB_CTSP_d_Model, SST_CTSP_d_Model,
-    VI_MTZ_CTSP_d_Model, VI_GP_CTSP_d_Model, VI_SSB_CTSP_d_Model, VI_SST_CTSP_d_Model,
-    VI_Ha_CTSP_d_Model
-]
+class MODELS_ENUM(Enum):
+    """Enum representing the available models"""
+    H2020 = "H2020"
+    
+    MTZ1 = "MTZ1"
+    GP1  = "GP1"
+    SSB1 = "SSB1"
+    SST1 = "SST1"
 
-def create_models_aliases_dict() -> Dict[str, CTSP_d_BaseModel]:
-    """Build and return a dict mapping the model aliases to the models available."""
-    return {
-        model.alias: model
-        for model in AVAILABLE_MODELS_LIST
-    }
+    MTZ2 = "MTZ2"
+    GP2  = "GP2"
+    SSB2 = "SSB2"
+    SST2 = "SST2"
+
+def create_model(model_type: MODELS_ENUM, data: Dict) -> CTSP_d_BaseModel:
+    """Function to build a model using a given input data"""
+    if(model_type == MODELS_ENUM.H2020):
+        return VI_Ha_CTSP_d_Model(data)
+    if(model_type == MODELS_ENUM.MTZ1):
+        return MTZ_CTSP_d_Model(data)
+    if(model_type == MODELS_ENUM.GP1):
+        return GP_CTSP_d_Model(data)
+    if(model_type == MODELS_ENUM.SSB1):
+        return SSB_CTSP_d_Model(data)
+    if(model_type == MODELS_ENUM.SST1):
+        return SST_CTSP_d_Model(data)
+    if(model_type == MODELS_ENUM.MTZ2):
+        return VI_MTZ_CTSP_d_Model(data)
+    if(model_type == MODELS_ENUM.GP2):
+        return VI_GP_CTSP_d_Model(data)
+    if(model_type == MODELS_ENUM.SSB2):
+        return VI_SSB_CTSP_d_Model(data)
+    if(model_type == MODELS_ENUM.SST2):
+        return VI_SST_CTSP_d_Model(data)
 
 def export_results(
         model: CTSP_d_BaseModel, 

@@ -6,10 +6,9 @@ from UserInputs import *
 
 print_solution_log(SOLUTION_LOG_LEVEL, 1, "Starting Solution Process!")
 
-alias_to_model_dict = create_models_aliases_dict()
-
 models_count = 1
-for model_alias in MODELS_LIST:
+for model_type in MODELS_LIST:
+    model_alias = model_type.name
     print_solution_log(SOLUTION_LOG_LEVEL, 2, f"Model: {model_alias} ({models_count}/{len(MODELS_LIST)})")
     if(USE_SOLVED_INSTANCES_LIST):
         if(not os.path.isfile(get_solved_instances_list_path(model_alias))):
@@ -26,7 +25,7 @@ for model_alias in MODELS_LIST:
                 instances_count += 1
                 continue
         data = read_instance(instance)
-        model = alias_to_model_dict[model_alias](data)
+        model = create_model(model_type, data)
         model.solve(
             time=GUROBI_PARAMETERS["MAX_RUNTIME"],
             log=GUROBI_PARAMETERS["PRINT_LOG"]
